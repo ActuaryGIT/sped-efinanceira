@@ -1,17 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema 	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-			xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns="http://www.eFinanceira.gov.br/schemas/evtMovOpFinAnual/v1_5_0"
-			targetNamespace="http://www.eFinanceira.gov.br/schemas/evtMovOpFinAnual/v1_5_0"
-			elementFormDefault="qualified"
-			attributeFormDefault="unqualified">
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_5_0" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_5_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../../Comum/xmldsig-core-schema.xsd"/>
   <xs:element name="eFinanceira">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="evtMovOpFinAnual">
+        <xs:element name="evtMovOpFin">
           <xs:annotation>
-            <xs:documentation>Evento de Informações de Movimento de Operações Financeiras Anual</xs:documentation>
+            <xs:documentation>Evento de Informações de Movimento de Operações Financeiras</xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
@@ -26,9 +21,9 @@
                         <xs:annotation>
                           <xs:documentation>
                             Indicativo de Retificação:
-                            1 - para arquivo original;
-                            2 - para arquivo de retificação espontânea;
-                            3 - para arquivo de retificação a pedido.
+                            1 - para arquivo original
+                            2 - para arquivo de retificação espontânea
+                            3 - para arquivo de retificação a pedido
                           </xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:unsignedByte">
@@ -474,7 +469,7 @@
                                 </xs:element>
                                 <xs:element name="Nome" minOccurs="1" maxOccurs="1">
                                   <xs:annotation>
-                                    <xs:documentation>Nome (cadeia única de caracteres)</xs:documentation>
+                                    <xs:documentation>Nome (cadeia única de caracteres) </xs:documentation>
                                   </xs:annotation>
                                   <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -1273,7 +1268,7 @@
                               <xs:sequence>
                                 <xs:element name="Pais" minOccurs="1" maxOccurs="1">
                                   <xs:annotation>
-                                    <xs:documentation>Nacionalidade</xs:documentation>
+                                    <xs:documentation>nacionalidade</xs:documentation>
                                   </xs:annotation>
                                   <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -1386,45 +1381,31 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="Caixa" minOccurs="1" maxOccurs="1">
+              <xs:element name="mesCaixa" minOccurs="1" maxOccurs="1">
                 <xs:annotation>
-                  <xs:documentation>Ano que está sendo reportado</xs:documentation>
+                  <xs:documentation>Mês e ano que está sendo reportado</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="anoCaixa" minOccurs="1" maxOccurs="1">
+                    <xs:element name="anoMesCaixa" minOccurs="1" maxOccurs="1">
                       <xs:annotation>
-                        <xs:documentation>Ano caixa que está sendo reportado</xs:documentation>
+                        <xs:documentation>Ano/mês caixa que está sendo reportado. Formato: AAAAMM</xs:documentation>
                       </xs:annotation>
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
-                          <xs:length value="4"/>
-                          <xs:pattern value="20([0-9][0-9])"/>
+                          <xs:length value="6"/>
+                          <xs:pattern value="20([0-9][0-9])(0[1-9]|1[0-3])"/>
+                          <!--yyyymm aceitando mês 13 também por causa do 13o-->
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element name="semestre" minOccurs="1" maxOccurs="1">
-                      <xs:annotation>
-                        <xs:documentation>
-                          Semestre que está sendo reportado:
-                          1 - primeiro semestre;
-                          2 - segundo semestre.
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:simpleType>
-                        <xs:restriction base="xs:unsignedByte">
-                          <xs:enumeration value="1"/>
-                          <xs:enumeration value="2"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="movOpFinAnual" minOccurs="1" maxOccurs="1">
+                    <xs:element name="movOpFin" minOccurs="1" maxOccurs="1">
                       <xs:annotation>
                         <xs:documentation>Operações financeiras</xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="Conta" minOccurs="1" maxOccurs="unbounded">
+                          <xs:element name="Conta" minOccurs="0" maxOccurs="unbounded">
                             <xs:annotation>
                               <xs:documentation>Identificação da conta</xs:documentation>
                             </xs:annotation>
@@ -1570,7 +1551,7 @@
                                       </xs:element>
                                       <xs:element name="dtAberturaConta" minOccurs="1" maxOccurs="1">
                                         <xs:annotation>
-                                          <xs:documentation>Data de abertura da conta. Formato AAAA-MM-DD.</xs:documentation>
+                                          <xs:documentation>Data de abertura da conta. Formato AAAA-MM-DD</xs:documentation>
                                         </xs:annotation>
                                         <xs:simpleType>
                                           <xs:restriction base="xs:date"/>
@@ -1702,7 +1683,7 @@
                                       </xs:element>
                                       <xs:element name="IndInatividade" minOccurs="0" maxOccurs="1">
                                         <xs:annotation>
-                                          <xs:documentation>Indicador de inatividade da conta</xs:documentation>
+                                          <xs:documentation>Indicador de inatividade da conta: 1 - sim</xs:documentation>
                                         </xs:annotation>
                                         <xs:simpleType>
                                           <xs:restriction base="xs:unsignedByte">
@@ -1712,7 +1693,7 @@
                                       </xs:element>
                                       <xs:element name="IndNDoc" minOccurs="0" maxOccurs="1">
                                         <xs:annotation>
-                                          <xs:documentation>Indicador de conta não documentada</xs:documentation>
+                                          <xs:documentation>Indicador de conta não documentada: 1 - sim</xs:documentation>
                                         </xs:annotation>
                                         <xs:simpleType>
                                           <xs:restriction base="xs:unsignedByte">
@@ -1757,7 +1738,55 @@
                                         </xs:annotation>
                                         <xs:complexType>
                                           <xs:sequence>
-                                            <xs:element name="vlrUltDia" minOccurs="1" maxOccurs="1">
+                                            <xs:element name="totCreditos" minOccurs="1" maxOccurs="1">
+                                              <xs:annotation>
+                                                <xs:documentation>Total de créditos</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="4"/>
+                                                  <xs:maxLength value="22"/>
+                                                  <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="totDebitos" minOccurs="1" maxOccurs="1">
+                                              <xs:annotation>
+                                                <xs:documentation>Total de débitos</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="4"/>
+                                                  <xs:maxLength value="22"/>
+                                                  <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="totCreditosMesmaTitularidade" minOccurs="1" maxOccurs="1">
+                                              <xs:annotation>
+                                                <xs:documentation>Total de créditos do mesmo titular</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="4"/>
+                                                  <xs:maxLength value="22"/>
+                                                  <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="totDebitosMesmaTitularidade" minOccurs="1" maxOccurs="1">
+                                              <xs:annotation>
+                                                <xs:documentation>Total de débitos do mesmo titular</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="4"/>
+                                                  <xs:maxLength value="22"/>
+                                                  <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                                </xs:restriction>
+                                              </xs:simpleType>
+                                            </xs:element>
+                                            <xs:element name="vlrUltDia" minOccurs="0" maxOccurs="1">
                                               <xs:annotation>
                                                 <xs:documentation>Saldo no último dia do mês ou do momento anterior ao encerramento da conta</xs:documentation>
                                               </xs:annotation>
@@ -1806,6 +1835,119 @@
                                       </xs:element>
                                     </xs:sequence>
                                   </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Cambio" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Informações sobre operações de câmbio</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="MedJudic" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation>Identificação de medidas judiciais</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="NumProcJud" minOccurs="1" maxOccurs="1">
+                                        <xs:simpleType>
+                                          <xs:annotation>
+                                            <xs:documentation>Número do processo judicial</xs:documentation>
+                                          </xs:annotation>
+                                          <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                            <xs:maxLength value="21"/>
+                                            <xs:pattern value="[0-9]{1,21}"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="Vara" minOccurs="1" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation>Vara de tramitação</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:unsignedInt">
+                                            <xs:totalDigits value="2"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="SecJud" minOccurs="1" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation>Seção judiciária</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:unsignedInt">
+                                            <xs:totalDigits value="2"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="SubSecJud" minOccurs="1" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation>Subseção judiciária</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                            <xs:maxLength value="40"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="dtConcessao" minOccurs="1" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation>Data de concessão da medida judicial. Formato AAAA-MM-DD.</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:date"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="dtCassacao" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation>Informar, caso ocorra o fim da vigência da medida judicial, a data de sua cassação. Formato AAAA-MM-DD.</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:date"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="totCompras" minOccurs="1" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation>Valor total de compras</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:minLength value="4"/>
+                                      <xs:maxLength value="22"/>
+                                      <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="totVendas" minOccurs="1" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation>Valor total de vendas</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:minLength value="4"/>
+                                      <xs:maxLength value="22"/>
+                                      <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="totTransferencias" minOccurs="1" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation>Valor total de transferências</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:minLength value="4"/>
+                                      <xs:maxLength value="22"/>
+                                      <xs:pattern value="[0-9]{1,19}[,][0-9]{2}"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
                                 </xs:element>
                               </xs:sequence>
                             </xs:complexType>

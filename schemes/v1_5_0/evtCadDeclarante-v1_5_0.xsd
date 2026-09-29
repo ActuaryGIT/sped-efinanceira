@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtCadPatrocinado/v1_5_0" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtCadPatrocinado/v1_5_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtCadDeclarante/v1_5_0" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtCadDeclarante/v1_5_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../../Comum/xmldsig-core-schema.xsd"/>
   <xs:element name="eFinanceira">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="evtCadPatrocinado">
+        <xs:element name="evtCadDeclarante">
           <xs:annotation>
-            <xs:documentation>Evento de Cadastro do Patrocinado</xs:documentation>
+            <xs:documentation>Evento de Informações da Entidade Declarante</xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ideEvento" minOccurs="1" maxOccurs="1">
                 <xs:annotation>
-                  <xs:documentation>Informações de identificação do evento</xs:documentation>
+                  <xs:documentation>Informações de Identificação do Evento</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
@@ -20,7 +20,7 @@
                       <xs:simpleType>
                         <xs:annotation>
                           <xs:documentation>
-                            Indicativo de retificação:
+                            Indicativo de Retificação:
                             1 - para arquivo original;
                             2 - para arquivo de retificação espontânea;
                             3 - para arquivo de retificação a pedido.
@@ -50,8 +50,8 @@
                         <xs:annotation>
                           <xs:documentation>
                             Identificação do ambiente:
-                            1 - Produção
-                            2 - Homologação
+                            1 - produção;
+                            2 - homologação.
                           </xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:unsignedByte">
@@ -65,8 +65,8 @@
                         <xs:annotation>
                           <xs:documentation>
                             Processo de emissão do evento:
-                            1- Emissão com aplicativo da empresa
-                            2- Outros
+                            1 - emissão com aplicativo da empresa;
+                            2 - outros.
                           </xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:unsignedByte">
@@ -105,34 +105,12 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element name="GIIN" minOccurs="0" maxOccurs="1">
-                      <xs:annotation>
-                        <xs:documentation>GIIN (Global Intermediary Identification Number) de Patrocinador (formato: XXXXXX.XXXXX.SP.XXX)</xs:documentation>
-                      </xs:annotation>
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:minLength value="1"/>
-                          <xs:maxLength value="19"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="CategoriaPatrocinador" minOccurs="0" maxOccurs="1">
-                      <xs:simpleType>
-                        <xs:annotation>
-                          <xs:documentation>Tipo da Categoria</xs:documentation>
-                        </xs:annotation>
-                        <xs:restriction base="xs:string">
-                          <xs:minLength value="0"/>
-                          <xs:maxLength value="8"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="infoPatrocinado" minOccurs="1" maxOccurs="1">
+              <xs:element name="infoCadastro" minOccurs="1" maxOccurs="1">
                 <xs:annotation>
-                  <xs:documentation>Informações da Entidade Patrocinada</xs:documentation>
+                  <xs:documentation>Informações de cadastro da Entidade Declarante</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                   <xs:sequence>
@@ -176,9 +154,30 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
+                    <xs:element name="tpEntidade" minOccurs="1" maxOccurs="5">
+                      <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>
+                            Tipo de entidade financeira:
+                            1 - Entidade de Depósito;
+                            2 - Entidade de Custódia;
+                            3 - Fundo de Investimento;
+                            4 - Entidade de Seguro e/ou Previdência;
+                            6 - Credenciadora ou subcredenciadora de meios de pagamentos.
+                          </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:unsignedByte">
+                          <xs:enumeration value="1"/>
+                          <xs:enumeration value="2"/>
+                          <xs:enumeration value="3"/>
+                          <xs:enumeration value="4"/>
+                          <xs:enumeration value="6"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
                     <xs:element name="GIIN" minOccurs="0" maxOccurs="1">
                       <xs:annotation>
-                        <xs:documentation>GIIN (Global Intermediary Identification Number) de Patrocinado</xs:documentation>
+                        <xs:documentation>Global Intermediary Identification Number</xs:documentation>
                       </xs:annotation>
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -187,20 +186,20 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element name="CNPJ" minOccurs="1" maxOccurs="1">
-                      <xs:annotation>
-                        <xs:documentation>CNPJ da Entidade Patrocinada</xs:documentation>
-                      </xs:annotation>
+                    <xs:element name="CategoriaDeclarante" minOccurs="0" maxOccurs="1">
                       <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>Tipo da categoria</xs:documentation>
+                        </xs:annotation>
                         <xs:restriction base="xs:string">
-                          <xs:minLength value="14"/>
-                          <xs:maxLength value="14"/>
+                          <xs:minLength value="0"/>
+                          <xs:maxLength value="8"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
                     <xs:element name="NIF" minOccurs="0" maxOccurs="unbounded">
                       <xs:annotation>
-                        <xs:documentation>Informações de Identificação Fiscal no Exterior da Entidade Patrocinada</xs:documentation>
+                        <xs:documentation>Informações de identificação fiscal no exterior da Entidade Declarante</xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
                         <xs:sequence>
@@ -240,10 +239,10 @@
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="nomePatrocinado" minOccurs="1" maxOccurs="1">
+                    <xs:element name="nome" minOccurs="1" maxOccurs="1">
                       <xs:simpleType>
                         <xs:annotation>
-                          <xs:documentation>Razão Social da Entidade Patrocinada</xs:documentation>
+                          <xs:documentation>Nome da Entidade Declarante</xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:string">
                           <xs:minLength value="1"/>
@@ -254,7 +253,7 @@
                     <xs:element name="tpNome" minOccurs="0" maxOccurs="1">
                       <xs:simpleType>
                         <xs:annotation>
-                          <xs:documentation>Tipo do nome do patrocinado</xs:documentation>
+                          <xs:documentation>Tipo do nome da Entidade Declarante</xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:string">
                           <xs:minLength value="1"/>
@@ -262,79 +261,80 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element name="endereco" minOccurs="1" maxOccurs="1">
-                      <xs:annotation>
-                        <xs:documentation>Endereço da Entidade Patrocinada</xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="enderecoLivre" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Endereço do Patrocinado</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="200"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="CEP" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Código de Endereçamento Postal do Endereço</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="8"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="municipio" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Município brasileiro (ou cidade no exterior)</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="100"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="pais" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>País</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="2"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
+                    <xs:element name="enderecoLivre" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>Endereço principal da Entidade Declarante</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:string">
+                          <xs:minLength value="1"/>
+                          <xs:maxLength value="200"/>
+                        </xs:restriction>
+                      </xs:simpleType>
                     </xs:element>
                     <xs:element name="tpEndereco" minOccurs="0" maxOccurs="1">
                       <xs:simpleType>
                         <xs:annotation>
-                          <xs:documentation>Tipo do endereço</xs:documentation>
+                          <xs:documentation>Tipo do endereço principal da Entidade Declarante</xs:documentation>
                         </xs:annotation>
                         <xs:restriction base="xs:string">
                           <xs:minLength value="1"/>
                           <xs:maxLength value="7"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="municipio" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>Código do município da Entidade Declarante, conforme tabela do IBGE</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:unsignedInt">
+                          <xs:totalDigits value="7"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="UF" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>Sigla da Unidade da Federação da Entidade Declarante</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:string">
+                          <xs:minLength value="1"/>
+                          <xs:maxLength value="2"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CEP" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:annotation>
+                          <xs:documentation>Código de Endereçamento Postal da Entidade Declarante</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:string">
+                          <xs:minLength value="1"/>
+                          <xs:maxLength value="8"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Pais" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>País do endereço da Entidade Declarante</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:minLength value="1"/>
+                          <xs:maxLength value="2"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
                     <xs:element name="paisResid" minOccurs="1" maxOccurs="unbounded">
                       <xs:annotation>
-                        <xs:documentation>País de residência da Entidade Patrocinada</xs:documentation>
+                        <xs:documentation>País de residência fiscal da Entidade Declarante</xs:documentation>
                       </xs:annotation>
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="Pais" minOccurs="1" maxOccurs="1">
                             <xs:annotation>
-                              <xs:documentation>País</xs:documentation>
+                              <xs:documentation>Sigla do país de residência da Entidade Declarante</xs:documentation>
                             </xs:annotation>
                             <xs:simpleType>
                               <xs:restriction base="xs:string">
@@ -352,7 +352,7 @@
             </xs:sequence>
             <xs:attribute name="id" use="required">
               <xs:annotation>
-                <xs:documentation>Identificador do evento</xs:documentation>
+                <xs:documentation>Identificador que representa unicamente o evento no sistema para a mesma empresa</xs:documentation>
               </xs:annotation>
               <xs:simpleType>
                 <xs:restriction base="xs:ID">
