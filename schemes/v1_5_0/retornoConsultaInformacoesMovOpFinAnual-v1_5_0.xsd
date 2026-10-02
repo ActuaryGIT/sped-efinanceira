@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/retornoConsultaInformacoesMovOpFinAnual/v1_5_0" targetNamespace="http://www.eFinanceira.gov.br/schemas/retornoConsultaInformacoesMovOpFinAnual/v1_5_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../comum/xmldsig-core-schema.xsd"/>
+  <xs:element name="eFinanceira">
+    <xs:annotation>
+      <xs:documentation>Elemento raiz e-Financeira.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="retornoConsultaInformacoesMovOpFinAnual">
+          <xs:annotation>
+            <xs:documentation>Define a estrutura do retorno da consulta de informacoes do movimento.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dataHoraProcessamento" type="xs:dateTime" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    Data e hora do processamento da solicitação
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="status" type="TStatus" minOccurs="1" maxOccurs="1" />
+              <xs:element name="identificacaoEmpresaDeclarante" type="TIdeEmpresaDeclarante" />
+              <xs:element name="informacoesMovimento" type="TInformacoesMovimento" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="TIdeEmpresaDeclarante">
+    <xs:annotation>
+      <xs:documentation>
+        Identificação da empresa declarante
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cnpjEmpresaDeclarante" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            CNPJ da empresa declarante
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Z]{14}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TStatus">
+    <xs:annotation>
+      <xs:documentation>
+        Situação da solicitação
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cdRetorno" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            Código do status da resposta do processamento da solicitação:
+            0 - Sucesso
+            1 - Erro
+            2 - Em processamento
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:pattern value="[0|1|2]"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descRetorno" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            Descrição literal do status da resposta
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="dadosRegistroOcorrenciaEvento" type="TRegistroOcorrencias"  minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TRegistroOcorrencias">
+    <xs:annotation>
+      <xs:documentation>
+        Ocorrências durante o processamento da solicitação
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ocorrencias" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="tipo" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  Tipo da ocorrência:
+                  1-Erro
+                  2-Advertência
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                  <xs:pattern value="[1|2]"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="localizacaoErroAviso" minOccurs="0" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  Caminho para a tag onde foi identificada a ocorrência
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="0"/>
+                  <xs:maxLength value="100" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codigo" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  Código da ocorrência
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="0"/>
+                  <xs:maxLength value="6" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="descricao" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  Código da descrição
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="0"/>
+                  <xs:maxLength value="255" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TInformacoesMovimento">
+    <xs:annotation>
+      <xs:documentation>
+        Informações de Movimento
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tipoNI" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Identificação do Declarado - Tipo de NI</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="NI" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Identificação do Declarado - NI</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="14" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="anoCaixa" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Ano Caixa</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:totalDigits value="4"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="semestre" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Semestre</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:totalDigits value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="situacao" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Situação</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:totalDigits value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numeroRecibo" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            Número do recibo de entrega
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="49" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="id" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            Identificação do evento
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="20" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
